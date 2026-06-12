@@ -1,8 +1,225 @@
-body {
-    background-color: #f0f8ff;
-    text-align: center;
-    font-family: sans-serif;
+/* ==========================================================================
+   全体の共通設定・リセット
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-h1 {
-    color: #333366;
+
+body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    /* 涼しげな水色から、アラートを連想させる微かな暖色へのグラデーション背景 */
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 50%, #fff7ed 100%);
+    background-attachment: fixed;
+    color: #334155;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   ヘッダーデザイン
+   ========================================================================== */
+header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    margin-bottom: 40px;
+}
+
+header .subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    color: #0f172a;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+/* グラデーションテキスト（熱中症の青〜赤のイメージ） */
+.gradient-text {
+    background: linear-gradient(45deg, #0ea5e9, #ea580c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   メインレイアウト＆共通パーツ
+   ========================================================================== */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 60px;
+}
+
+section h2 {
+    font-size: 1.6rem;
+    color: #0f172a;
+    margin-bottom: 24px;
+    position: relative;
+    padding-left: 16px;
+}
+
+/* 見出しの左側にスタイリッシュなアクセントライン */
+section h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 75%;
+    background: linear-gradient(to bottom, #0ea5e9, #2563eb);
+    border-radius: 4px;
+}
+
+/* 【グラスモルフィズム】半透明のすりガラス風カード */
+.glass-card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* ホバー時に少し浮き上がるアニメーション */
+.glass-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
+}
+
+/* ==========================================================================
+   活動ログセクション
+   ========================================================================== */
+.log-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* カード同士の間隔 */
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-bottom: 12px;
+}
+
+.log-header h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.log-date {
+    font-size: 0.85rem;
+    font-weight: 700;
+    background-color: rgba(15, 23, 42, 0.08);
+    color: #334155;
+    padding: 6px 14px;
+    border-radius: 30px;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   班員・担当教員紹介セクション
+   ========================================================================== */
+.members-grid {
+    display: grid;
+    /* 画面幅に合わせて自動で2列〜3列などに並び替わる設定 */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.members-grid h3 {
+    font-size: 1.4rem;
+    color: #1e293b;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+
+/* 役職バッジの共通設定 */
+.role {
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 30px;
+    letter-spacing: 0.05em;
+}
+
+/* 各クラスに応じたパステル系の配色設定 */
+.role.blue { background-color: #e0f2fe; color: #0369a1; }
+.role.green { background-color: #dcfce7; color: #15803d; }
+.role.orange { background-color: #ffedd5; color: #c2410c; }
+.role.pink { background-color: #fce7f3; color: #be185d; }
+.role.yellow { background-color: #fef9c3; color: #a16207; }
+.role.purple { background-color: #f3e8ff; color: #6b21a8; }
+
+/* 担当教員用の特別な枠線 */
+.border-purple {
+    border: 2px solid rgba(168, 85, 247, 0.4);
+    background: rgba(243, 232, 255, 0.25);
+}
+.border-purple:hover {
+    background: rgba(243, 232, 255, 0.4);
+}
+
+/* ==========================================================================
+   フッターデザイン
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 60px 20px 30px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+/* ==========================================================================
+   スマートフォン向けのレスポンシブ対応
+   ========================================================================== */
+@media (max-width: 640px) {
+    header {
+        padding: 40px 10px 20px;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .log-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .log-date {
+        align-self: flex-start;
+    }
+    
+    .glass-card {
+        padding: 20px;
+    }
 }
