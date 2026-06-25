@@ -9,8 +9,8 @@
 <body>
 
     <header>
-        <p class="subtitle">市川工業高校 2026年度 課題研究 5班</p>
-        <h1>バーサライタと通信機器を用いた<br><span class="gradient-text">熱中症アラートシステムの製作</span></h1>
+        <p class="subtitle">千葉県立市川工業高等学校 課題研究</p>
+        <h1>バーサライタと通信機器を用いた<br><span class="gradient-text">熱中症アラートシステム</span>の製作</h1>
     </header>
 
     <main>
@@ -20,18 +20,42 @@
 
                 <div class="glass-card">
                     <div class="log-header">
-                        <h3>担当教員の決定とWebサイト公開準備</h3>
-                        <span class="log-date">第2回 (3時間)</span>
+                        <h3>ドットマトリクスLEDによる安全・危険の視覚化表示</h3>
+                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
                     </div>
-                    <p>中島先生に班のみんなでプレゼンを行い、正式に担当教員になっていただくことが決まりました！その後、GitHubを使って軽く index.html と css のファイルを作成し、サイトを公開するやり方などを学びました。</p>
+                    <p>7セグメントLEDでの数値出力実験を経て、発光数をさらに増やしたドットマトリクスLEDを用いた絵文字（笑顔など）の出力に挑戦しました。熱中症の危険度を視覚的に判別できるようにするための基礎研究です。プログラム内でビットパターンデータを定義し、<strong>右ビットシフト演算（<code>&gt;&gt;</code>）と論理積（<code>&amp; 0x01</code>）を組み合わせた型抜き処理（ビット判定ロジック）</strong>を実装。8マスのうち光らせたいマスの情報だけを一瞬の計算でピンポイントに抽出・制御することに成功しました。</p>
                 </div>
 
                 <div class="glass-card">
                     <div class="log-header">
-                        <h3>テーマ設定と担当教員の検討</h3>
-                        <span class="log-date">第1回 (3時間)</span>
+                        <h3>7セグメントLEDを用いた数値出力と共通設計図の構築</h3>
+                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
                     </div>
-                    <p>初回の活動です。研究テーマを「バーサライタと通信機器を用いた熱中症アラートシステムの製作」に決定しました。また、このテーマの担当をお願いする先生の候補を班員で話し合いました。</p>
+                    <p>バーサライタでの将来的な文字出力を見据え、目視で情報がはっきり分かるように7セグメントLEDを用いた0〜9のカウントアップ回路を設計しました。前回の<code>delay()</code>関数によるミリ秒単位の速度制御を応用したほか、使用する7セグの種類（カソードコモン／アノードコモン）の性質の違いに対応するため、プログラム側で自動的にHIGHとLOWの信号を反転させて翻訳する<strong>「共通設計図（自動判定ロジック <code>if (!IS_CATHODE_COMMON)</code>）」</strong>を組み込み、部品が変わってもそのまま動く柔軟なコードを開発しました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
+                        <h3>Arduinoによる3色LEDの条件分岐ウェーブ点灯制御</h3>
+                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
+                    </div>
+                    <p>3色同時点灯の成功を踏まえ、Arduino IDEを用いた本格的なプログラム制御に移行しました。変数 <code>count</code> を定義して時間の経過とともにループ内で加算させ、<code>if - else if</code> による条件分岐（<code>count &lt;= 10</code>、<code>20</code>、<code>30</code>）を構築。11番・12番・13番の各ピンへの出力を順次切り替えることで、<strong>赤・黄・緑の3色のLEDが流れるようにウェーブ状に点灯する回路</strong>とアルゴリズムを完成させました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
+                        <h3>温度センサー（TMP36）の特性理解とシミュレーション検証</h3>
+                        <span class="log-date">温度センサー班：鈴木暖人 / 増田淑紀</span>
+                    </div>
+                    <p>熱中症検知の頭脳となる温度センサー（TMP36）のデータシートを読み解き、温度変化に伴う内部抵抗の変化（0℃の時に500mV出力、1℃上昇ごとに10mV増加する特性）について学びました。その後、<strong>Tinkercadを用いたオンラインシミュレーション環境</strong>を構築し、センサーとマルチメーターを接続。任意の温度設定における出力電圧を測定し、メーカーが提供するデータシートの理想特性曲線と一致するかを比較・検証しました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
+                        <h3>LEDの前提知識習得と3色同時点灯の基礎実験</h3>
+                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
+                    </div>
+                    <p>電子工作の第一歩として、LEDの極性（足の長いアノードがプラス、短いカソードがマイナス）や、データシートで定格電流（DC Forward Current：一般的には20mA）を確認する重要性を学習しました。その後、Arduino Uno、ブレッドボード、330Ωの抵抗3個を使用し、<strong>赤・黄・緑の3つのLEDを過電流なく安全に同時点灯させる基本回路</strong>をブレッドボード上に構築しました。</p>
                 </div>
 
             </div>
@@ -42,32 +66,27 @@
             
             <div class="members-grid">
                 <div class="glass-card text-center">
-                    <h3>K. F.</h3>
-                    <p class="role blue">班長</p>
+                    <h3>藤原 海音</h3>
+                    <p class="role blue">LED研究班</p>
                 </div>
 
                 <div class="glass-card text-center">
-                    <h3>Y. Y.</h3>
-                    <p class="role green">進行管理</p>
+                    <h3>鈴木 敬吾</h3>
+                    <p class="role blue">LED研究班</p>
                 </div>
 
                 <div class="glass-card text-center">
-                    <h3>Y. M.</h3>
-                    <p class="role orange">ウェブ管理</p>
+                    <h3>鈴木 暖人</h3>
+                    <p class="role green">温度センサー班</p>
                 </div>
 
                 <div class="glass-card text-center">
-                    <h3>K. S.</h3>
-                    <p class="role pink">電子工作</p>
-                </div>
-
-                <div class="glass-card text-center">
-                    <h3>H. S.</h3>
-                    <p class="role yellow">電子工作</p>
+                    <h3>増田 淑紀</h3>
+                    <p class="role green">温度センサー班 / Web管理</p>
                 </div>
 
                 <div class="glass-card text-center border-purple">
-                    <h3>M. N. 先生</h3>
+                    <h3>中島 先生</h3>
                     <p class="role purple">担当教員</p>
                 </div>
             </div>
