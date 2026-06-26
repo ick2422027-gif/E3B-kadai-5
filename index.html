@@ -20,42 +20,74 @@
 
                 <div class="glass-card">
                     <div class="log-header">
+                        <h3>仮想センサによる連続ループ演算と常時監視ロジックの構築</h3>
+                        <span class="log-date">WBGT担当：山崎 勇気（第4回経過報告）</span>
+                    </div>
+                    <p>実機センサの配線・取得テストが進む間の「ソフトウェア先行開発」として、マイコン内での常時監視を想定したプログラムへと改善しました。1秒周期でデータを自動取得して計算し続ける<strong>「連続ループ処理」</strong>を実装。さらに、実機の代わりに5〜35℃の気温、20〜90%の湿度データを自動生成する<strong>「仮想センサコード（ダミーデータ発生環境）」</strong>を構築し、広範囲な変動でもシステムがクラッシュせず、リアルタイムにWBGT値を算出して3段階の危険度フラグを動的に切り替えられる追従性を実証しました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
                         <h3>ドットマトリクスLEDによる安全・危険の視覚化表示</h3>
-                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
+                        <span class="log-date">LED担当：藤原 海音 / 鈴木 敬吾（第4回経過報告）</span>
                     </div>
                     <p>7セグメントLEDでの数値出力実験を経て、発光数をさらに増やしたドットマトリクスLEDを用いた絵文字（笑顔など）の出力に挑戦しました。熱中症の危険度を視覚的に判別できるようにするための基礎研究です。プログラム内でビットパターンデータを定義し、<strong>右ビットシフト演算（<code>&gt;&gt;</code>）と論理積（<code>&amp; 0x01</code>）を組み合わせた型抜き処理（ビット判定ロジック）</strong>を実装。8マスのうち光らせたいマスの情報だけを一瞬の計算でピンポイントに抽出・制御することに成功しました。</p>
                 </div>
 
                 <div class="glass-card">
                     <div class="log-header">
+                        <h3>実環境データによるWBGTアルゴリズム検証と精度テスト</h3>
+                        <span class="log-date">WBGT担当：山崎 勇気（第3回経過報告）</span>
+                    </div>
+                    <p>実際の環境（気温25.1℃ / 湿度63%）において、自作プログラムによるWBGT計算値と、信頼性の高い外部WEBツールの計算結果を比較テストしました。複雑な逆三角関数（arctan）を用いたアルゴリズムが正確に機能しているかを検証した結果、数値は<strong>「誤差なしの完全一致」</strong>を達成。あわせて、WBGT値の約7割が「湿度」に依存するという熱ストレスの特性（日本の夏の不快リスク）を再確認し、If構文を用いた3段階（緑・黄・赤）の危険度判定ロジックが正常に動作することを確認しました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
                         <h3>7セグメントLEDを用いた数値出力と共通設計図の構築</h3>
-                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
+                        <span class="log-date">LED担当：藤原 海音 / 鈴木 敬吾（第3回経過報告）</span>
                     </div>
                     <p>バーサライタでの将来的な文字出力を見据え、目視で情報がはっきり分かるように7セグメントLEDを用いた0〜9のカウントアップ回路を設計しました。前回の<code>delay()</code>関数によるミリ秒単位の速度制御を応用したほか、使用する7セグの種類（カソードコモン／アノードコモン）の性質の違いに対応するため、プログラム側で自動的にHIGHとLOWの信号を反転させて翻訳する<strong>「共通設計図（自動判定ロジック <code>if (!IS_CATHODE_COMMON)</code>）」</strong>を組み込み、部品が変わってもそのまま動く柔軟なコードを開発しました。</p>
                 </div>
 
                 <div class="glass-card">
                     <div class="log-header">
+                        <h3>温度・湿度からのWBGTリアルタイム演算プログラムの開発</h3>
+                        <span class="log-date">WBGT担当：山崎 勇気（第2回経過報告）</span>
+                    </div>
+                    <p>専門的な測定器を必要とせず、温度センサと湿度センサから得られる生データのみから、屋内用WBGT（暑さ指数）をリアルタイムで算出する基本プログラムを構築しました。公式（<code>WBGT = 0.7 × Tcalc + 0.3 × Temp</code>）をコードに落とし込み、算出された数値に応じて<strong>「安全（21℃未満：緑点灯）」「警戒（21℃〜28℃：黄点灯）」「厳重警戒・危険（28℃以上：赤点灯）」</strong>へとLEDカラーを連動させる危険度判定ロジックの基盤を確立しました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
                         <h3>Arduinoによる3色LEDの条件分岐ウェーブ点灯制御</h3>
-                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
+                        <span class="log-date">LED担当：藤原 海音 / 鈴木 敬吾（第2回経過報告）</span>
                     </div>
                     <p>3色同時点灯の成功を踏まえ、Arduino IDEを用いた本格的なプログラム制御に移行しました。変数 <code>count</code> を定義して時間の経過とともにループ内で加算させ、<code>if - else if</code> による条件分岐（<code>count &lt;= 10</code>、<code>20</code>、<code>30</code>）を構築。11番・12番・13番の各ピンへの出力を順次切り替えることで、<strong>赤・黄・緑の3色のLEDが流れるようにウェーブ状に点灯する回路</strong>とアルゴリズムを完成させました。</p>
                 </div>
 
                 <div class="glass-card">
                     <div class="log-header">
-                        <h3>温度センサー（TMP36）の特性理解とシミュレーション検証</h3>
-                        <span class="log-date">温度センサー班：鈴木暖人 / 増田淑紀</span>
+                        <h3>WBGT（暑さ指数）の基本概念と屋内算出アプローチの検討</h3>
+                        <span class="log-date">WBGT担当：山崎 勇気（第1回経過報告）</span>
                     </div>
-                    <p>熱中症検知の頭脳となる温度センサー（TMP36）のデータシートを読み解き、温度変化に伴う内部抵抗の変化（0℃の時に500mV出力、1℃上昇ごとに10mV増加する特性）について学びました。その後、<strong>Tinkercadを用いたオンラインシミュレーション環境</strong>を構築し、センサーとマルチメーターを接続。任意の温度設定における出力電圧を測定し、メーカーが提供するデータシートの理想特性曲線と一致するかを比較・検証しました。</p>
+                    <p>熱中症アラートシステムの根幹を支える指標として、WBGT（暑さ指数）の専門的な調査を行いました。気温・湿度・日射の3要素が人体に与える熱負担について学び、今回は「教室等の屋内」をターゲットとするため、日射の影響を除外した屋内用基本公式の採用を検討。環境省や日本生気象学会のガイドラインを基準に、測定器なしで温度と湿度から数値を割り出すための理論的アプローチと、班内での役割分担を策定しました。</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="log-header">
+                        <h3>温度センサー（TMP36）の特性理解とシミュレーション検証</h3>
+                        <span class="log-date">センサー担当：鈴木 暖人 / 増田 淑紀（第1回経過報告）</span>
+                    </div>
+                    <p>熱中症検知の頭脳となる温度センサー（TMP36）のデータシートを読み解き、温度変化に伴う内部抵抗の変化（0℃の時に500mV出力、1℃上昇ごとに10mV増加する特性）について学びました。その後、<strong>Tinkercadを用いたオンラインシミュレーション環境</strong>を構築し、センサーとマルチメーターを接続。任意の温度設定における出力電圧を測定し、データシートの理想特性曲線と一致するかを比較・検証しました。</p>
                 </div>
 
                 <div class="glass-card">
                     <div class="log-header">
                         <h3>LEDの前提知識習得と3色同時点灯の基礎実験</h3>
-                        <span class="log-date">LED班：藤原海音 / 鈴木敬吾</span>
+                        <span class="log-date">LED担当：藤原 海音 / 鈴木 敬吾（第1回経過報告）</span>
                     </div>
-                    <p>電子工作の第一歩として、LEDの極性（足の長いアノードがプラス、短いカソードがマイナス）や、データシートで定格電流（DC Forward Current：一般的には20mA）を確認する重要性を学習しました。その後、Arduino Uno、ブレッドボード、330Ωの抵抗3個を使用し、<strong>赤・黄・緑の3つのLEDを過電流なく安全に同時点灯させる基本回路</strong>をブレッドボード上に構築しました。</p>
+                    <p>電子工作の第一歩として、LEDの極性（足の長いアノードがプラス、短いカソードがマイナス）や、データシートで定格電流（一般的には20mA）を確認する重要性を学習しました。その後、Arduino Uno、ブレッドボード、330Ωの抵抗3個を使用し、<strong>赤・黄・緑の3つのLEDを過電流なく安全に同時点灯させる基本回路</strong>をブレッドボード上に構築しました。</p>
                 </div>
 
             </div>
@@ -67,26 +99,31 @@
             <div class="members-grid">
                 <div class="glass-card text-center">
                     <h3>藤原 海音</h3>
-                    <p class="role blue">LED研究班</p>
+                    <p class="role blue">班長 / LED担当</p>
                 </div>
 
                 <div class="glass-card text-center">
                     <h3>鈴木 敬吾</h3>
-                    <p class="role blue">LED研究班</p>
+                    <p class="role blue">LED担当</p>
                 </div>
 
                 <div class="glass-card text-center">
                     <h3>鈴木 暖人</h3>
-                    <p class="role green">温度センサー班</p>
+                    <p class="role green">センサー担当</p>
                 </div>
 
                 <div class="glass-card text-center">
                     <h3>増田 淑紀</h3>
-                    <p class="role green">温度センサー班 / Web管理</p>
+                    <p class="role green">センサー担当</p>
+                </div>
+
+                <div class="glass-card text-center">
+                    <h3>山崎 勇気</h3>
+                    <p class="role orange">WBGT担当</p>
                 </div>
 
                 <div class="glass-card text-center border-purple">
-                    <h3>中島 先生</h3>
+                    <h3>中島 瑞貴 先生</h3>
                     <p class="role purple">担当教員</p>
                 </div>
             </div>
